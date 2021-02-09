@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sst.mapper.EpisodeMapper">
+
+	<resultMap type="com.sst.entity.Episode" id="Episode">
+		<id column="id" property="id"/>
+		<result column="title"  property="title"/>
+		<result column="num"  property="num"/>
+		<result column="duration"  property="duration"/>
+		<result column="cover_img"  property="coverImg"/>
+		<result column="video_id"  property="videoId"/>
+		<result column="summary"  property="summary"/>
+		<result column="create_time"  property="createTime"/>
+		<result column="chapter_id"  property="chapterId"/>
+	</resultMap>
+
+	<insert id="create" keyProperty="id" useGeneratedKeys="true" parameterType="com.sst.entity.Episode">
+		insert into episode(
+			title,
+			num,
+			duration,
+			cover_img,
+			video_id,
+			summary,
+			create_time,
+			chapter_id
+		)values(
+			#{title},
+			#{num},
+			#{duration},
+			#{coverImg},
+			#{videoId},
+			#{summary},
+			#{createTime},
+			#{chapterId}
+		)
+	</insert>
+
+	<select id="query" resultMap="Episode">
+		select * from episode
+		<include refid="EpisodeFindCriteria"/>
+
+	</select>
+
+
+	<select id="count" resultType="int">
+		select count(1) from episode
+		<include refid="EpisodeFindCriteria"/>
+	</select>
+
+	<select id="detail" resultMap="Episode">
+		select * from episode where id = #{id}
+	</select>
+
+	<delete id="delete">
+		delete from episode where id = #{id}
+	</delete>
+	<update id="update">
+		update episode set
+			title=#{title},
+			num=#{num},
+			duration=#{duration},
+			cover_img=#{coverImg},
+			video_id=#{videoId},
+			summary=#{summary},
+			create_time=#{createTime},
+			chapter_id=#{chapterId}
+		where id = #{id}
+	</update>
+
+	<update id="updateSelective">
+		update episode
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null and title != ''"> title = #{title},</if>
+			<if test="num != null">num = #{num},</if>
+			<if test="duration != null and duration != ''"> duration = #{duration},</if>
+			<if test="coverImg != null and coverImg != ''"> cover_img = #{coverImg},</if>
+			<if test="videoId != null">video_id = #{videoId},</if>
+			<if test="summary != null and summary != ''"> summary = #{summary},</if>
+			<if test="createTime != null and createTime != ''"> create_time = #{createTime},</if>
+			<if test="chapterId != null">chapter_id = #{chapterId},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<sql id="EpisodeFindCriteria">
+		<where>
+			<if test="id != null">and id = #{id}</if>
+			<if test="title != null and title != ''">and title = #{title}</if>
+			<if test="num != null">and num = #{num}</if>
+			<if test="duration != null and duration != ''">and duration = #{duration}</if>
+			<if test="coverImg != null and coverImg != ''">and cover_img = #{coverImg}</if>
+			<if test="videoId != null">and video_id = #{videoId}</if>
+			<if test="summary != null and summary != ''">and summary = #{summary}</if>
+			<if test="chapterId != null">and chapter_id = #{chapterId}</if>
+		</where>
+	</sql>
+
+</mapper>

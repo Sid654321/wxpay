@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sst.mapper.UserMapper">
+
+	<resultMap type="com.sst.entity.User" id="User">
+		<id column="id" property="id"/>
+		<result column="openid"  property="openid"/>
+		<result column="name"  property="name"/>
+		<result column="head_img"  property="headImg"/>
+		<result column="phone"  property="phone"/>
+		<result column="sign"  property="sign"/>
+		<result column="sex"  property="sex"/>
+		<result column="city"  property="city"/>
+		<result column="create_time"  property="createTime"/>
+	</resultMap>
+
+	<insert id="create" keyProperty="id" useGeneratedKeys="true" parameterType="com.sst.entity.User">
+		insert into user(
+			openid,
+			name,
+			head_img,
+			phone,
+			sign,
+			sex,
+			city,
+			create_time
+		)values(
+			#{openid},
+			#{name},
+			#{headImg},
+			#{phone},
+			#{sign},
+			#{sex},
+			#{city},
+			#{createTime}
+		)
+	</insert>
+
+	<select id="query" resultMap="User">
+		select * from user
+		<include refid="UserFindCriteria"/>
+
+	</select>
+
+
+	<select id="count" resultType="int">
+		select count(1) from user
+		<include refid="UserFindCriteria"/>
+	</select>
+
+	<select id="detail" resultMap="User">
+		select * from user where id = #{id}
+	</select>
+
+	<delete id="delete">
+		delete from user where id = #{id}
+	</delete>
+	<update id="update">
+		update user set
+			openid=#{openid},
+			name=#{name},
+			head_img=#{headImg},
+			phone=#{phone},
+			sign=#{sign},
+			sex=#{sex},
+			city=#{city},
+			create_time=#{createTime}
+		where id = #{id}
+	</update>
+
+	<update id="updateSelective">
+		update user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="openid != null and openid != ''"> openid = #{openid},</if>
+			<if test="name != null and name != ''"> name = #{name},</if>
+			<if test="headImg != null and headImg != ''"> head_img = #{headImg},</if>
+			<if test="phone != null and phone != ''"> phone = #{phone},</if>
+			<if test="sign != null and sign != ''"> sign = #{sign},</if>
+			<if test="sex != null and sex != ''"> sex = #{sex},</if>
+			<if test="city != null and city != ''"> city = #{city},</if>
+			<if test="createTime != null and createTime != ''"> create_time = #{createTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<sql id="UserFindCriteria">
+		<where>
+			<if test="id != null">and id = #{id}</if>
+			<if test="openid != null and openid != ''">and openid = #{openid}</if>
+			<if test="name != null and name != ''">and name = #{name}</if>
+			<if test="headImg != null and headImg != ''">and head_img = #{headImg}</if>
+			<if test="phone != null and phone != ''">and phone = #{phone}</if>
+			<if test="sign != null and sign != ''">and sign = #{sign}</if>
+			<if test="sex != null and sex != ''">and sex = #{sex}</if>
+			<if test="city != null and city != ''">and city = #{city}</if>
+		</where>
+	</sql>
+
+</mapper>

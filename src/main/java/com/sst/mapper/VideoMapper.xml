@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sst.mapper.VideoMapper">
+
+	<resultMap type="com.sst.entity.Video" id="Video">
+		<id column="id" property="id"/>
+		<result column="title"  property="title"/>
+		<result column="summary"  property="summary"/>
+		<result column="cover_img"  property="coverImg"/>
+		<result column="view_num"  property="viewNum"/>
+		<result column="price"  property="price"/>
+		<result column="create_time"  property="createTime"/>
+		<result column="online"  property="online"/>
+		<result column="point"  property="point"/>
+	</resultMap>
+
+	<insert id="create" keyProperty="id" useGeneratedKeys="true" parameterType="com.sst.entity.Video">
+		insert into video(
+			title,
+			summary,
+			cover_img,
+			view_num,
+			price,
+			create_time,
+			online,
+			point
+		)values(
+			#{title},
+			#{summary},
+			#{coverImg},
+			#{viewNum},
+			#{price},
+			#{createTime},
+			#{online},
+			#{point}
+		)
+	</insert>
+
+	<select id="query" resultMap="Video">
+		select * from video
+		<include refid="VideoFindCriteria"/>
+
+	</select>
+
+
+	<select id="count" resultType="int">
+		select count(1) from video
+		<include refid="VideoFindCriteria"/>
+	</select>
+
+	<select id="detail" resultMap="Video">
+		select * from video where id = #{id}
+	</select>
+
+	<delete id="delete">
+		delete from video where id = #{id}
+	</delete>
+	<update id="update">
+		update video set
+			title=#{title},
+			summary=#{summary},
+			cover_img=#{coverImg},
+			view_num=#{viewNum},
+			price=#{price},
+			create_time=#{createTime},
+			online=#{online},
+			point=#{point}
+		where id = #{id}
+	</update>
+
+	<update id="updateSelective">
+		update video
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null and title != ''"> title = #{title},</if>
+			<if test="summary != null and summary != ''"> summary = #{summary},</if>
+			<if test="coverImg != null and coverImg != ''"> cover_img = #{coverImg},</if>
+			<if test="viewNum != null">view_num = #{viewNum},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="createTime != null and createTime != ''"> create_time = #{createTime},</if>
+			<if test="online != null">online = #{online},</if>
+			<if test="point != null">point = #{point},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<sql id="VideoFindCriteria">
+		<where>
+			<if test="id != null">and id = #{id}</if>
+			<if test="title != null and title != ''">and title = #{title}</if>
+			<if test="summary != null and summary != ''">and summary = #{summary}</if>
+			<if test="coverImg != null and coverImg != ''">and cover_img = #{coverImg}</if>
+			<if test="viewNum != null">and view_num = #{viewNum}</if>
+			<if test="price != null">and price = #{price}</if>
+			<if test="online != null">and online = #{online}</if>
+			<if test="point != null">and point = #{point}</if>
+		</where>
+	</sql>
+
+</mapper>
