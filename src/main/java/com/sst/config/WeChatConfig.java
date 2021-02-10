@@ -28,7 +28,50 @@ public class WeChatConfig {
     @Value("${wxopen.redirect_url}")
     private String openRedirectUrl;
 
+    /**
+     * 微信开放平台二维码连接
+     */
+    @Value("${wxopen.OPEN_QRCODE_URL}")
+    private String OPEN_QRCODE_URL;
 
+
+    /**
+     * 开放平台获取access_token地址
+     */
+    @Value("${wxopen.OPEN_ACCESS_TOKEN_URL}")
+    private String OPEN_ACCESS_TOKEN_URL;
+
+
+    /**
+     * 获取用户信息
+     */
+    @Value("${wxopen.OPEN_USER_INFO_URL}")
+    private String OPEN_USER_INFO_URL;
+
+
+    public String getOPEN_QRCODE_URL() {
+        return OPEN_QRCODE_URL;
+    }
+
+    public void setOPEN_QRCODE_URL(String OPEN_QRCODE_URL) {
+        this.OPEN_QRCODE_URL = OPEN_QRCODE_URL;
+    }
+
+    public String getOPEN_ACCESS_TOKEN_URL() {
+        return OPEN_ACCESS_TOKEN_URL;
+    }
+
+    public void setOPEN_ACCESS_TOKEN_URL(String OPEN_ACCESS_TOKEN_URL) {
+        this.OPEN_ACCESS_TOKEN_URL = OPEN_ACCESS_TOKEN_URL;
+    }
+
+    public String getOPEN_USER_INFO_URL() {
+        return OPEN_USER_INFO_URL;
+    }
+
+    public void setOPEN_USER_INFO_URL(String OPEN_USER_INFO_URL) {
+        this.OPEN_USER_INFO_URL = OPEN_USER_INFO_URL;
+    }
 
     public String getOpenAppId() {
         return openAppId;

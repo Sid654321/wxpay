@@ -1,11 +1,13 @@
 package com.sst.entity;
 
 import com.sst.utils.Entity;
+
+import java.io.Serializable;
 import java.util.Date;
 
 
 
-public class User extends Entity{
+public class User extends Entity implements Serializable {
 
 
 	private Integer id;
@@ -20,7 +22,7 @@ public class User extends Entity{
 
 	private String sign;
 
-	private String sex;
+	private Integer sex;
 
 	private String city;
 
@@ -62,12 +64,15 @@ public class User extends Entity{
 	public void setSign(String sign) {
 		this.sign = sign;
 	}
-	public String getSex() {
+
+	public Integer getSex() {
 		return sex;
 	}
-	public void setSex(String sex) {
+
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
+
 	public String getCity() {
 		return city;
 	}
@@ -79,5 +84,20 @@ public class User extends Entity{
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", openid='" + openid + '\'' +
+				", name='" + name + '\'' +
+				", headImg='" + headImg + '\'' +
+				", phone='" + phone + '\'' +
+				", sign='" + sign + '\'' +
+				", sex='" + sex + '\'' +
+				", city='" + city + '\'' +
+				", createTime=" + createTime +
+				'}';
 	}
 }

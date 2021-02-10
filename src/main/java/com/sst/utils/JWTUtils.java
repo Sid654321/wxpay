@@ -1,6 +1,7 @@
 package com.sst.utils;
 
 import com.sst.entity.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,7 +20,7 @@ public class JWTUtils {
 
     public static String jwt_secret = "frgregreg1515";
     //过期时间（毫秒）
-    public static long jwt_expr = 3600*24*1000;
+    public static long jwt_expr = 3600*24*10000;
 
 
     /**
@@ -60,7 +61,7 @@ public class JWTUtils {
             if(token == null || token.length() == 0){
                 return false;
             }
-            Jwts.parser().setSigningKey(jwt_secret).parseClaimsJws(token).getBody();
+            Claims body = Jwts.parser().setSigningKey(jwt_secret).parseClaimsJws(token).getBody();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

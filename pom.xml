@@ -109,6 +109,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -127,8 +128,8 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
+                    <include>application.properties</include>
                 </includes>
-
             </resource>
         </resources>
         <plugins>

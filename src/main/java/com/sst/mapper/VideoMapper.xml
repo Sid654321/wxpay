@@ -86,7 +86,7 @@
 	<sql id="VideoFindCriteria">
 		<where>
 			<if test="id != null">and id = #{id}</if>
-			<if test="title != null and title != ''">and title = #{title}</if>
+			<if test="title != null and title != ''">and title like concat('%',#{title},'%')</if>
 			<if test="summary != null and summary != ''">and summary = #{summary}</if>
 			<if test="coverImg != null and coverImg != ''">and cover_img = #{coverImg}</if>
 			<if test="viewNum != null">and view_num = #{viewNum}</if>

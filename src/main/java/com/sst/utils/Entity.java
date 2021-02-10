@@ -1,7 +1,7 @@
 package com.sst.utils;
 
 public class Entity {
-    private Integer  page;
+    private Integer  page = 1;
     private Integer limit = 10;
 
     public Integer getPage() {

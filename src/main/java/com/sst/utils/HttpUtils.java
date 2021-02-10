@@ -1,10 +1,14 @@
 package com.sst.utils;
 
 import com.google.gson.Gson;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -57,6 +61,44 @@ public class HttpUtils {
             }
         }
         return map;
+    }
+
+    public static String doPost(String url,String data){
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(timeout)
+                .setSocketTimeout(timeout)
+                .setConnectionRequestTimeout(timeout)
+                .setRedirectsEnabled(true)//允许重定向
+                .build();
+        HttpPost httpPost = new HttpPost();
+        httpPost.setConfig(requestConfig);
+        httpPost.addHeader("Content-type","text/html; charset=UTF-8");
+
+        if(data != null && data instanceof String){
+            StringEntity stringEntity = new StringEntity(data, "UTF-8");
+            httpPost.setEntity(stringEntity);
+        }
+
+        try {
+            CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            if(httpResponse.getStatusLine().getStatusCode() == 200){
+                String result = EntityUtils.toString(httpEntity);
+                return result;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
     }
 
 
